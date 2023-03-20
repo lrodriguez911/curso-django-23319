@@ -34,4 +34,4 @@ class Professor(Person):
 new_student = Student("Lucas", "Rodriguez", 12312313, "lucas@gmail.com", 1234, True )
 new_student.signin()
 
-new_pro
+# new_pro
