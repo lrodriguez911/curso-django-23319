@@ -7,7 +7,7 @@ class Persona(ABC):
         self.__apellido = apellido    
         self.dni = dni
         self.email = email
-    def __str__(self) -> str:
+    def __str__(self):
         return f'{self.nombre} {self.apellido}'
 
     #using a getter
@@ -46,7 +46,7 @@ class Docente(Persona):
 
     
 nuevo_estudiante = Estudiante("Victoria","López","287878969","vickylopez@gmail.com",111222,"0")
-print(nuevo_estudiante.__apellido)
+# print(nuevo_estudiante.__apellido)
 
 # nuevo_estudiante.registrarse()
 
@@ -55,3 +55,4 @@ print(nuevo_estudiante.__apellido)
 
 # print(nuevo_docente)
 # print(nuevo_estudiante)
+print(nuevo_estudiante)

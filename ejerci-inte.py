@@ -76,46 +76,40 @@ get_int() """
 #  Es_mayor_de_edad(): Devuelve un valor lógico indicando si es mayor de edad.
 
 class Persona():
-    def __init__(self, nombre, telefono, dni):
+    def __init__(self, nombre: str="", edad: int = 0, dni:int =0):
         self.nombre = nombre
-        self.telefono = telefono
+        self.edad = edad
         self.dni = dni
-    
-    def mostrar(self):
-        print(self.nombre, self.telefono, self.dni)
     
     @property
     def nombre(self):
-        return self.nombre
+        return self.__nombre
     @property
-    def telefono(self):
-        return self.telefono
+    def edad(self):
+        return self.__edad
     @property
     def dni(self):
-        return self.dni
+        return self.__dni
     
     @nombre.setter
-    def nombre(self, a):
-        if type(a) != str:
-           raise TypeError("ingrese una cadena de texto")
-        else:
-            self.nombre = a
-            print("nombre modificado")
-        
-    @telefono.setter
-    def telefono(self, a):
-        if len(a) < 6:
-            raise ValueError("ingrese telefono valido (8 caracteres)")
-        else:
-            self.telefono = a
-            print("telefono modificado")
+    def nombre(self, nombre):
+            self.__nombre = nombre
+
+    @edad.setter
+    def edad(self, edad):
+        self.__edad = edad
+        self.mayor_de_edad()
             
     @dni.setter
-    def dni(self, a):
-        # while not type(a) == int or len(a) < 6:
-        #     print("Ingrese un dni valido")
-        self.dni = a
-        print("dni modificado")
+    def dni(self, dni):
+        self.__dni = dni
+        
+    def mostrar(self):
+        print(f'{self.nombre} edad: {self.edad} dni: {self.dni}')
+        
+    def mayor_de_edad(self):
+        return self.__edad > 18
+    
         
     
 # 7. Crea una clase llamada Cuenta que tendrá los siguientes atributos: titular (que es una
@@ -130,29 +124,29 @@ class Persona():
 #  retirar(cantidad): se retira una cantidad a la cuenta. La cuenta puede estar en números
 # rojos.
 
-class Cuenta(Persona):
-    def __init__(self, nombre, telefono, dni, cantidad=0):
-        self.titular = super().__init__(nombre, telefono, dni)
+class Cuenta():
+    def __init__(self, titular, cantidad: float = 0.0):
+        self.titular = titular
         self.__cantidad = cantidad
-        
+    
     @property
     def titular(self):
-        return self.titular
-    @property
-    def cantidad(self):
-        return self.__cantidad
+        return self.__titular
     
-    def mostrar(self):
-        print(self.titular, self.__cantidad)
+    @titular.setter
+    def titular(self, titular):
+        self.__titular = titular
+    
+    def mostrarCuenta(self):
+        return print(f'Cuenta {self.__titular.mostrar()} | Cantidad: {self.__cantidad}')
         
-    def ingresar(self, a):
-        if self.__cantidad < 0:
-            print('Ingrese un numero positivo')
-        print(f'saldo actual {self.__cantidad}')
+    def ingresar(self, cantidad):
+        if self.__cantidad > 0:
+            self.__cantidad += cantidad
         
-    def retirar(self, a):
-        self.__cantidad -= a
-        print(f'saldo actual {self.__cantidad}')
+    def retirar(self, cantidad):
+         if cantidad > 0:
+            self.__cantidad -= cantidad
     
     
     
@@ -171,16 +165,29 @@ class Cuenta(Persona):
 
 
 class CuentaJover(Cuenta):
-    def __init__(self,titular, bonificacion,):
-        super().__init__(titular, cantidad=0)
+    def __init__(self, titular: Persona, cantidad: float =0, bonificacion: float= 0):
+        super().__init__(titular, cantidad)
+        self.bonificacion = bonificacion
+        
+    @property
+    def bonificacion(self):
+        return self.__bonificacion
+    
+    @bonificacion.setter
+    def bonificacion(self, bonificacion):
+        self.__bonificacion=bonificacion
         
     def es_titular_valido(self):
-        print(self.titular, self.cantidad)
+        return self.titular.edad < 25 and self.titular.edad > 18
     
     def mostrar(self):
         print("Cuenta Joven", self.titular, self.cantidad)
         
-    def retirar(self, a):
-        self.cantidad -= a
+    def retirar(self, cantidad: int):
+        self.cantidad -= cantidad
         print(f'saldo actual {self.cantidad}')
 
+
+lucas1 = Persona("Lucas R", 31, 123456)
+cuenta = Cuenta( lucas1 , 100)
+cuenta.mostrarCuenta()
